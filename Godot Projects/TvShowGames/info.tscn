@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmbmmkjuobus2"]
+
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="1_iehox"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="2_gfodl"]
+[ext_resource type="Script" path="res://info.gd" id="3_s8g0w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ququ"]
+shader = ExtResource("1_iehox")
+shader_parameter/radius = 2.0
+
+[node name="Info" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_3ququ")
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_gfodl")
+stretch_mode = 4
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 1373.0
+offset_bottom = 365.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "Info"
+
+[node name="Info" type="Label" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 400.0
+offset_right = 1373.0
+offset_bottom = 757.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 50
+text = "Aplicatie creata pentru simulare TV Game Shows.
+
+Instructiuni:
+- Gaseste Cuvintele:
+- Ce spun ... :"
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+layout_mode = 1
+offset_left = 100.0
+offset_top = 940.0
+offset_right = 600.0
+offset_bottom = 1017.0
+script = ExtResource("3_s8g0w")
+
+[node name="Inapoi" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Înapoi"
+
+[connection signal="pressed" from="Buttons/Inapoi" to="Buttons" method="_on_inapoi_pressed"]

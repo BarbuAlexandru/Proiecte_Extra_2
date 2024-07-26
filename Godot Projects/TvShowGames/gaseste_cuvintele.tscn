@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://drnhlx3feqou8"]
+
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="1_k7bgr"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="2_oih15"]
+[ext_resource type="Script" path="res://gaseste_cuvintele.gd" id="3_jcxku"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ua6m7"]
+shader = ExtResource("1_k7bgr")
+shader_parameter/radius = 2.0
+
+[node name="GasesteCuvintele" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_ua6m7")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_oih15")
+stretch_mode = 4
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+offset_left = 100.0
+offset_top = 860.0
+offset_right = 600.0
+offset_bottom = 1018.0
+script = ExtResource("3_jcxku")
+
+[node name="Start_GasesteCuvintele" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Start"
+
+[node name="Inapoi" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Înapoi"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(600, 100)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 100.0
+offset_top = 550.0
+offset_right = 700.0
+offset_bottom = 650.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+placeholder_text = "Alege File-ul cu cuvinte."
+
+[node name="Title" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 1373.0
+offset_bottom = 365.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "Găsește Cuvintele"
+
+[connection signal="pressed" from="Buttons/Start_GasesteCuvintele" to="Buttons" method="_on_start_gaseste_cuvintele_pressed"]
+[connection signal="pressed" from="Buttons/Inapoi" to="Buttons" method="_on_inapoi_pressed"]
+[connection signal="text_changed" from="TextEdit" to="Buttons" method="_on_text_edit_text_changed"]

@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://w2j87tt8e1um"]
+
+[ext_resource type="Script" path="res://gaseste_cuvintele_joc.gd" id="1_cc7kp"]
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="1_hrtan"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="2_cn6ux"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3phrs"]
+shader = ExtResource("1_hrtan")
+shader_parameter/radius = 6.0
+
+[node name="GasesteCuvintele_Joc" type="Node2D"]
+script = ExtResource("1_cc7kp")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_3phrs")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_cn6ux")
+stretch_mode = 4
+
+[node name="timer_total" type="Label" parent="."]
+custom_minimum_size = Vector2(600, 2.08165e-12)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1300.0
+offset_right = 1900.0
+offset_bottom = 137.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 130
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="timer_total_pauza" type="Label" parent="."]
+custom_minimum_size = Vector2(600, 2.08165e-12)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1300.0
+offset_right = 1900.0
+offset_bottom = 137.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 130
+text = "------"
+horizontal_alignment = 2
+
+[node name="timer_ghicit" type="Label" parent="."]
+custom_minimum_size = Vector2(600, 2.08165e-12)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 900.0
+offset_right = 1500.0
+offset_bottom = 178.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.388235, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 130
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="Descriere" type="Label" parent="."]
+custom_minimum_size = Vector2(1800, 300)
+offset_left = 100.0
+offset_top = 600.0
+offset_right = 1373.0
+offset_bottom = 765.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "Descriere"
+
+[node name="Puncte" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 920.0
+offset_right = 1373.0
+offset_bottom = 1085.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 70
+text = "Puncte"
+
+[node name="Cuvant" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 1373.0
+offset_bottom = 365.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 200
+text = "Cuvant"
+horizontal_alignment = 1

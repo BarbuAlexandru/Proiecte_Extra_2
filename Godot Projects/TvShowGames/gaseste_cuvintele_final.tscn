@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh25o5jqef60e"]
+
+[ext_resource type="Script" path="res://gaseste_cuvintele_final.gd" id="1_pilmy"]
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="2_mrvn0"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="3_6oelp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdlwp"]
+shader = ExtResource("2_mrvn0")
+shader_parameter/radius = 2.0
+
+[node name="GasesteCuvintele_Final" type="Node2D"]
+script = ExtResource("1_pilmy")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_gdlwp")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_6oelp")
+stretch_mode = 4
+
+[node name="Title" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 1373.0
+offset_bottom = 365.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "Felicitari!"
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+offset_left = 100.0
+offset_top = 860.0
+offset_right = 600.0
+offset_bottom = 1018.0
+
+[node name="Restart" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Restart"
+
+[node name="Inapoi" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Înapoi"
+
+[connection signal="pressed" from="Buttons/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Buttons/Inapoi" to="." method="_on_inapoi_pressed"]

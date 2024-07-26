@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4k3hcy06mp3s"]
+
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="1_2dxoq"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="1_c4i3v"]
+[ext_resource type="Script" path="res://MenuScript.gd" id="3_1l4hn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ole5u"]
+shader = ExtResource("1_2dxoq")
+shader_parameter/radius = 2.08165e-12
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_ole5u")
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_c4i3v")
+stretch_mode = 4
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+layout_mode = 1
+offset_left = 100.0
+offset_top = 700.0
+offset_right = 600.0
+offset_bottom = 1020.0
+script = ExtResource("3_1l4hn")
+
+[node name="GasesteCuvintele" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Găsește Cuvintele"
+
+[node name="CeSpun" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Ce spun ... ?"
+
+[node name="Info" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Info"
+
+[node name="Iesire" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Iesire"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 1373.0
+offset_bottom = 365.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "OSCEC TV Game Night"
+
+[connection signal="pressed" from="Buttons/GasesteCuvintele" to="Buttons" method="_on_gaseste_cuvintele_pressed"]
+[connection signal="pressed" from="Buttons/CeSpun" to="Buttons" method="_on_ce_spun_pressed"]
+[connection signal="pressed" from="Buttons/Info" to="Buttons" method="_on_info_pressed"]
+[connection signal="pressed" from="Buttons/Iesire" to="Buttons" method="_on_iesire_pressed"]
