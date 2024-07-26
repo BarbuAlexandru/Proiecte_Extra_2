@@ -47,6 +47,7 @@ func _ready():
 	loadLevel()
 	
 func loadLevel():
+	descriereTextNode.set("theme_override_colors/font_color",Color.WHITE)
 	timerGhicit = timpGhicit;
 	punctajTextNode.set_text("Puncte: "+str(punctaj))
 	timer.wait_time = 1
@@ -55,7 +56,7 @@ func loadLevel():
 	finalRunda = false
 	timerTotalPauzaTextNode.visible = false;
 	if(currentLevel >= len(localLevels)):
-		Global.scor = punctaj;
+		Global.Scor = punctaj;
 		get_tree().change_scene_to_file("res://gaseste_cuvintele_final.tscn");
 		return
 	var level = localLevels[currentLevel]
@@ -85,7 +86,7 @@ func timerSecond():
 	if(timerGhicit < 0):
 		cuvantNeghicit();
 	if(timerMinutes < 0):
-		Global.scor = punctaj;
+		Global.Scor = punctaj;
 		get_tree().change_scene_to_file("res://gaseste_cuvintele_final.tscn");
 		return
 	else:
@@ -94,11 +95,11 @@ func timerSecond():
 		timerTotalTextNode.set_text(getTimeLeftAsString(timerMinutes, timerSeconds))
 		timerGhicitTextNode.set_text(getTimeLeftAsString(0, timerGhicit))
 
-func getTimeLeftAsString(min, sec):
+func getTimeLeftAsString(minutes, sec):
 	var secondsText = str(sec) if sec > 9 else "0" + str(sec)
-	return (str(min) + ":" + secondsText)
+	return (str(minutes) + ":" + secondsText)
 
-func _input(ev):
+func _input(_ev):
 	if Input.is_key_pressed(KEY_SPACE):
 		if(finalRunda == false and ghicit == false):
 			timerGhicit = timpGhicit
@@ -139,6 +140,7 @@ func cuvantGhicit():
 	timerGhicitTextNode.visible = false;
 	timerTotalPauzaTextNode.visible = true;
 	
+	descriereTextNode.set("theme_override_colors/font_color",Color.GREEN)
 	descriereTextNode.set_text("Bravo, ai ghicit cuvantul :)!\nAi primit " + str(punctajCurent) + " puncte!")
 	punctajTextNode.set_text("Puncte: "+str(punctaj))
 
@@ -158,10 +160,10 @@ func cuvantNeghicit():
 	finalRunda = true
 	timerGhicitTextNode.visible = false;
 	timerTotalPauzaTextNode.visible = true;
-	descriereTextNode.add_color_region("start", "end", Color.RED)
+	descriereTextNode.set("theme_override_colors/font_color",Color.RED)
 	descriereTextNode.set_text("Din pacate nu ai ghicit cuvantul :(..\nNu ai primit niciun punct.")
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

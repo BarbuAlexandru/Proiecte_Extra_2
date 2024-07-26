@@ -43,11 +43,13 @@ offset_right = 1373.0
 offset_bottom = 757.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "Aplicatie creata pentru simulare TV Game Shows.
 
 Instructiuni:
-- Gaseste Cuvintele:
+- Pune json file-ul in acelasi folder cu aplicatia. Iar cand scri numele, fara extensie.
+- Gaseste Cuvintele: ESC - inapoi la meniu, SPACE - Incepe Perioada Ghicit, L - dezvaluie o litera, dupa,
+     cand trebuie ghicit, Y/N - ghicit sau nu, P - penalizare 5 secunde. La finalul rundei, N - urmatoarea runda.
 - Ce spun ... :"
 
 [node name="Buttons" type="VBoxContainer" parent="."]

@@ -3,7 +3,7 @@ extends Node2D
 var punctajTextNode
 
 func _ready():
-	var punctaj = Global.scor
+	var punctaj = Global.Scor
 	punctajTextNode = get_node("/root/GasesteCuvintele_Final/Title")
 	punctajTextNode.set_text("Felicitari!!\nAi obtinut "+str(punctaj)+" puncte!!")
 

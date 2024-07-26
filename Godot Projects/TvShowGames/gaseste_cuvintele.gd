@@ -5,7 +5,7 @@ var pathModel = "res://REPLACE.json";
 var error = "File-ul nu exista.";
 
 func _ready():
-	Global.scor = 0;
+	Global.Scor = 0;
 
 func _on_inapoi_pressed():
 	get_tree().change_scene_to_file("res://menu.tscn")
