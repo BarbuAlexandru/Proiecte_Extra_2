@@ -44,7 +44,7 @@ text = "Restart"
 [node name="Inapoi" type="Button" parent="Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "Înapoi"
+text = "Meniu"
 
 [connection signal="pressed" from="Buttons/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Buttons/Inapoi" to="." method="_on_inapoi_pressed"]

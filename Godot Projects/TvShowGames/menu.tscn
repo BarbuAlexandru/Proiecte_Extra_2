@@ -39,7 +39,7 @@ text = "Găsește Cuvintele"
 [node name="CeSpun" type="Button" parent="Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "Ce spun ... ?"
+text = "Ce spune OSCEC?"
 
 [node name="Info" type="Button" parent="Buttons"]
 layout_mode = 2

@@ -1,0 +1,96 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8dr7sq5op6h5"]
+
+[ext_resource type="Script" path="res://ce_spun_joc.gd" id="1_tdx4f"]
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="2_usd15"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="3_sa116"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qimpb"]
+shader = ExtResource("2_usd15")
+shader_parameter/radius = 6.0
+
+[node name="CeSpun_Joc" type="Node2D"]
+script = ExtResource("1_tdx4f")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_qimpb")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_sa116")
+stretch_mode = 4
+
+[node name="Puncte" type="Label" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+offset_left = 100.0
+offset_top = 940.0
+offset_right = 900.0
+offset_bottom = 1036.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 70
+text = "Puncte"
+horizontal_alignment = 1
+
+[node name="Greseli" type="Label" parent="."]
+custom_minimum_size = Vector2(800, 2.08165e-12)
+offset_left = 1020.0
+offset_top = 940.0
+offset_right = 1820.0
+offset_bottom = 1036.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 70
+text = "Greseli"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="."]
+offset_left = 460.0
+offset_top = 20.0
+offset_right = 1460.0
+offset_bottom = 157.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "Ce Spune OSCEC?"
+horizontal_alignment = 1
+
+[node name="Intrebare" type="Label" parent="."]
+custom_minimum_size = Vector2(1900, 2.08165e-12)
+offset_left = 10.0
+offset_top = 200.0
+offset_right = 1910.0
+offset_bottom = 337.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 90
+text = "Intrebare"
+horizontal_alignment = 1
+
+[node name="Raspuns_Left" type="Label" parent="."]
+custom_minimum_size = Vector2(800, 2.08165e-12)
+offset_left = 100.0
+offset_top = 400.0
+offset_right = 900.0
+offset_bottom = 849.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "Optiunea 1
+Optiunea 2
+Optiunea 3
+Optiunea 4"
+horizontal_alignment = 1
+
+[node name="Raspuns_Right" type="Label" parent="."]
+custom_minimum_size = Vector2(800, 2.08165e-12)
+offset_left = 1020.0
+offset_top = 400.0
+offset_right = 1820.0
+offset_bottom = 849.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "Optiunea 1
+Optiunea 2
+Optiunea 3
+Optiunea 4"
+horizontal_alignment = 1

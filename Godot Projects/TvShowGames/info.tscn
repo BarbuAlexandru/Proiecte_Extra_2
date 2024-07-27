@@ -50,7 +50,10 @@ Instructiuni:
 - Pune json file-ul in acelasi folder cu aplicatia. Iar cand scri numele, fara extensie.
 - Gaseste Cuvintele: ESC - inapoi la meniu, SPACE - Incepe Perioada Ghicit, L - dezvaluie o litera, dupa,
      cand trebuie ghicit, Y/N - ghicit sau nu, P - penalizare 5 secunde. La finalul rundei, N - urmatoarea runda.
-- Ce spun ... :"
+     Cand toate rundele s-au terminat, sau a expirat timpul, apasa N pentru rezultat.
+- Ce spune OSCEC: dupa ce se incarca nivelul, se apasa pe 1,2,..,8 pentru a arata optiunea aleasa (daca este
+     exista). Punctele se aduna automat, iar cand toate optiunile sunt aratate, apasa N pentru rezultat.
+     Cand cineva a raspuns ceva ce nu este intre optiuni, apasa N pentru o gresala. La 3 greseli a pierdut."
 
 [node name="Buttons" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(500, 2.08165e-12)

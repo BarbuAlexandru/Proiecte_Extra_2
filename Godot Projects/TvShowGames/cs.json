@@ -1,0 +1,39 @@
+{
+	"Code": "CS",
+	"Intrebare": "Care este cel mai periculos animal?",
+	"Content": 
+	[
+		{
+			"Option": "Animal1",
+			"Scor": 3
+		},
+		{
+			"Option": "Animal2",
+			"Scor": 7
+		},
+		{
+			"Option": "Animal3",
+			"Scor": 66
+		},
+		{
+			"Option": "Animal4",
+			"Scor": 22
+		},
+		{
+			"Option": "Animal5",
+			"Scor": 64
+		},
+		{
+			"Option": "Animal6",
+			"Scor": 83
+		},
+		{
+			"Option": "Animal7",
+			"Scor": 99
+		},
+		{
+			"Option": "Animal8",
+			"Scor": 2
+		},
+	]
+}

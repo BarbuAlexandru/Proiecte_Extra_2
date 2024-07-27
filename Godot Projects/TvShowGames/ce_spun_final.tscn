@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqcew14t21srq"]
+
+[ext_resource type="Script" path="res://ce_spun_final.gd" id="1_76lcm"]
+[ext_resource type="Shader" path="res://menu_blur.gdshader" id="2_re865"]
+[ext_resource type="Texture2D" uid="uid://b65am6gyqeuxi" path="res://background.jpg" id="3_romux"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4ka2"]
+shader = ExtResource("2_re865")
+shader_parameter/radius = 2.0
+
+[node name="CeSpun_Final" type="Node2D"]
+script = ExtResource("1_76lcm")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_v4ka2")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_romux")
+stretch_mode = 4
+
+[node name="Title" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 1373.0
+offset_bottom = 365.0
+theme_override_colors/font_color = Color(0.87451, 0.819608, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 100
+text = "Felicitari!"
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+offset_left = 100.0
+offset_top = 860.0
+offset_right = 600.0
+offset_bottom = 1018.0
+
+[node name="Restart" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Restart"
+
+[node name="Inapoi" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Meniu"
+
+[connection signal="pressed" from="Buttons/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Buttons/Inapoi" to="." method="_on_inapoi_pressed"]
