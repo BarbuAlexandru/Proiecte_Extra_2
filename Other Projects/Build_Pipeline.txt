@@ -1,0 +1,176 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+trigger:
+  - '*'
+
+variables:
+  buildMetaData: |
+    $[coalesce(variables['GitVersion.BuildMetaData'], '0')]
+
+pool:
+  name: 'Docker'
+
+stages:
+  - stage: Build
+    displayName: Build Solution
+
+    jobs:
+      - job: Build
+        pool:
+          name: Default
+        steps:
+        - checkout: self
+          fetchDepth: 0
+        - task: gittools.gitversion.gitversion-task.GitVersion@5 
+          inputs:
+            runtime: 'full'
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              # Hack to get the GitVersion on a Linux machine
+              $jsonBase = @{}
+              $jsonBase.Add("GitVersionSemVer","$(GitVersion.SemVer)")
+              $jsonBase.Add("BuildMetaData","$(GitVersion.BuildMetaData)")
+              $jsonstring = $jsonBase | ConvertTo-Json -Depth 10
+              $jsonstring = $jsonstring.Replace("+", "-")
+              $data = $jsonstring.Replace(([char]0).ToString(), "")
+              [IO.File]::WriteAllLines("$(System.DefaultWorkingDirectory)\GitVersion.json",$data)
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: GitVersion'
+          inputs:
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/GitVersion.json'
+            ArtifactName: 'GitVersion'
+            publishLocation: 'Container'
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: environment-settings'
+          inputs:
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/environment-settings'
+            ArtifactName: 'environment-settings'
+            publishLocation: 'Container'
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: docker-compose'
+          inputs:
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/azure-pipelines'
+            ArtifactName: 'docker-compose'
+            publishLocation: 'Container'
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: docker'
+          inputs:
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/Dockerfile'
+            ArtifactName: 'docker-compose'
+            publishLocation: 'Container'
+        - task: SonarCloudPrepare@2
+          inputs:
+            SonarCloud: 'SonarCloud'
+            organization: 'alpinagroup-it'
+            scannerMode: 'CLI'
+            configMode: 'manual'
+            cliProjectKey: 'AlpinaGroup-IT_alpina-business-calculation-frontend'
+            cliProjectName: 'alpina-business-calculation-frontend'
+            cliProjectVersion: '$(GitVersion.MajorMinorPatch)'
+            cliSources: '.'
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '18.x'
+          displayName: 'Install Node.js'
+        - script: |
+            npm install -g @angular/cli@16.0.0
+          displayName: 'angular 16.0.0 install'
+        - script: |
+            npm ci --legacy-peer-deps
+          displayName: 'npm ci'
+        - script: |
+            ng build  --output-path $(Build.ArtifactStagingDirectory)/alpina-business-calculation-frontend
+          displayName: 'ng build'
+        - script: |
+            npx nx run-many --target=test --all --reporters="jest-junit"
+          displayName: 'Run all unittests'
+          enabled: true
+        - task: PublishTestResults@2
+          displayName: 'Publish Test Results'
+          inputs:
+            testResultsFiles: 'junit*.xml'
+            mergeTestResults: true
+            failTaskOnFailedTests: true
+          condition: succeededOrFailed()
+        - script: |
+            npx nx run-many --target=lint --all  --maxWarnings 0
+          displayName: 'nx lint'
+        - task: SonarCloudAnalyze@2
+          displayName: 'SonarCloud - Run Code Analysis'
+        - task: SonarCloudPublish@2
+          displayName: 'SonarCloud - Publish Quality Gate Result'
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: alpina-business-calculation-frontend'
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/alpina-business-calculation-frontend'
+            ArtifactName: 'alpina-business-calculation-frontend'
+            publishLocation: 'Container'
+
+      - job: PublishToDocker
+        dependsOn: Build
+        pool:
+          name: Docker
+        steps:
+        - task: DownloadBuildArtifacts@0
+          displayName: 'DownloadBuildArtifacts: alpina-business-calculation-frontend'
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'alpina-business-calculation-frontend'
+            downloadPath: '$(System.ArtifactsDirectory)/'
+        - task: DownloadBuildArtifacts@0
+          displayName: 'DownloadBuildArtifacts: GitVersion.json'
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'GitVersion'
+            downloadPath: '$(System.DefaultWorkingDirectory)/'
+        - task: OneLuckiDev.json2variable.vsts-release-web-test.oneLuckiDevJson2Variable@1
+          displayName: ''
+          inputs:
+            jsonFile: '$(System.DefaultWorkingDirectory)/GitVersion/GitVersion.json'
+            shouldPrefixVariables: false
+        - task: CopyFiles@2
+          displayName: 'Copy Files'
+          inputs:
+            SourceFolder: '$(System.ArtifactsDirectory)/alpina-business-calculation-frontend'
+            Contents: '**'
+            TargetFolder: '$(System.DefaultWorkingDirectory)/dist/alpina-business-calculation-frontend'
+            
+        # Login to docker registry
+        - task: Docker@2
+          displayName: 'Docker login'
+          inputs:
+            containerRegistry: 'alpina group container registry (prod)'
+            command: 'login'
+
+        # Build and push docker images to dev voogd
+        - task: Docker@2
+          displayName: 'Docker build BusinessCalculationFrontend dev voogd'
+          inputs:
+            containerRegistry: 'alpina group container registry (ont)'
+            repository: 'alpina-business-calculation-frontend'
+            command: 'buildAndPush'
+            Dockerfile: '**/Dockerfile'
+            buildContext: '$(System.DefaultWorkingDirectory)'
+            tags: |
+              $(GitVersionSemVer)-$(BuildMetaData)
+              latest
+
+        # Build and push docker images to prod voogd
+        - task: Docker@2
+          displayName: 'Docker build BusinessCalculationFrontend prod voogd'
+          condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+          inputs:
+            containerRegistry: 'alpina group container registry (prod)'
+            repository: 'alpina-business-calculation-frontend'
+            command: 'buildAndPush'
+            Dockerfile: '**/Dockerfile'
+            buildContext: '$(System.DefaultWorkingDirectory)'
+            tags: |
+              $(GitVersionSemVer)-$(BuildMetaData)
+              latest
